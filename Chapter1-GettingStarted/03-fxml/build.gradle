@@ -1,0 +1,12 @@
+javafx {
+    version = "15.0.1"
+    modules = [ 'javafx.fxml' ]
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDirs = ['src/main/resources', 'src/main/java']
+        }
+    }
+}

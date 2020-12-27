@@ -1,0 +1,52 @@
+// To run this do:
+// ./gradlew run
+
+// To build a distribution zip:
+// ./gradlew distZip
+buildscript {
+    repositories {
+        maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
+    }
+    dependencies {
+        classpath 'org.openjfx:javafx-plugin:0.0.9'
+    }
+}
+
+subprojects {
+	apply plugin: 'application'
+	apply plugin: 'org.openjfx.javafxplugin'
+
+	sourceCompatibility = 11
+	targetCompatibility = 11
+
+	repositories {
+	    maven {
+	        url 'https://plugins.gradle.org/m2/'
+	    }
+	}
+
+	dependencies {
+	    /* uncomment for cross-platform jar: */
+	    //runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:win"
+	    //runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:linux"
+	    //runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:mac"
+	}
+
+	javafx {
+	    version = "15.0.1"
+	    modules = [ 'javafx.controls' ]
+	}
+
+	mainClassName = 'com.cicadasworld.Main'
+
+	jar {
+	    manifest {
+	        attributes 'Main-Class': 'com.cicadasworld.Main'
+	    }
+	    from {
+	        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+	    }
+	}
+}
